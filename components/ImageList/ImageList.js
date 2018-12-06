@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, ScrollView } from 'react-native'
+import { Text, ScrollView, Image, SafeAreaView } from 'react-native'
 
 
 export default class ImageList extends React.Component{
@@ -9,10 +9,16 @@ export default class ImageList extends React.Component{
     const images = this.props.images
     console.log("images in ImageList: ", images)
     return(
-      <ScrollView>
-        {images.map((imageSource) => <Image source={imageSource}/>)}
-      </ScrollView>
-          
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+          {images.map((imageSource, i) => <Image source={{uri: imageSource}} key={i} style={this.styles.image}/>)}
+        </ScrollView>
     )
+  }
+
+  styles = {
+    image: {
+      height: 200,
+      width: 220
+    }
   }
 }

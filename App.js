@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {Platform, StyleSheet, Text, View, SafeAreaView, Button } from 'react-native'
+import { StyleSheet, View, SafeAreaView } from 'react-native'
+import { Button, Text } from 'native-base';
 import Greeting from './components/Greeting/Greeting.js'
 import PlaceholderImage from './components/Image/PlaceholderImage.js'
 import ImageList from './components/ImageList/ImageList.js'
@@ -33,12 +34,7 @@ export default class App extends Component<Props> {
           <View style={styles.container}>
             <View style={styles.header}>
               <Text style={styles.welcome}>Hello</Text>
-              <Button
-                onPress={() => this.getImages()}
-                title="Get Images"
-                color="#841584"
-                accessibilityLabel="Learn more about this purple button"
-              />
+              <Button primary onPress={() => this.getImages()}><Text>Get Images</Text></Button>
             </View>
             <View style={styles.placeholder}>
               {this.state.imagesLoaded ? <ImageList images={this.state.images}/> : <PlaceholderImage/>}
@@ -69,6 +65,6 @@ const styles = StyleSheet.create({
   placeholder: {
     padding: 20,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 })
