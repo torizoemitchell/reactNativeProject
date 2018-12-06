@@ -1,34 +1,47 @@
 import React, {Component} from 'react'
-import {Platform, StyleSheet, Text, View, SafeAreaView} from 'react-native'
+import {Platform, StyleSheet, Text, View, SafeAreaView, Button } from 'react-native'
 import Greeting from './components/Greeting/Greeting.js'
-import BasicButton from './components/Button/BasicButton.js'
 import PlaceholderImage from './components/Image/PlaceholderImage.js'
+import ImageList from './components/ImageList/ImageList.js'
 
 type Props = {};
 export default class App extends Component<Props> {
 
   state = {
+    images: [],
     imagesLoaded: false,
   }
 
-  getImages = () => {
+
+  getImages = async() => {
     console.log("getImages")
-    
+    const response = await fetch('https://tori-collective-api.herokuapp.com/api/posts')
+    const jsonResponse = await response.json()
+    console.log("jsonResponse: ", jsonResponse)
+    let resImages = []
+    jsonResponse.forEach((post)=> resImages.push(post.img_url))
+    this.setState({
+      images: resImages,
+      imagesLoaded: true
+    })
   }
 
   render() {
+    console.log("rendering state: ", this.state)
     return (
         <SafeAreaView style={{flex:1}}>
           <View style={styles.container}>
             <View style={styles.header}>
               <Text style={styles.welcome}>Hello</Text>
-                <BasicButton
-                  title='Get Images'
-                  getImages={this.getImages}
-                />
+              <Button
+                onPress={() => this.getImages()}
+                title="Get Images"
+                color="#841584"
+                accessibilityLabel="Learn more about this purple button"
+              />
             </View>
             <View style={styles.placeholder}>
-              <PlaceholderImage/>
+              {this.state.imagesLoaded ? <ImageList images={this.state.images}/> : <PlaceholderImage/>}
             </View>
           </View>
         </SafeAreaView>
